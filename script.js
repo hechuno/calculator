@@ -3,6 +3,7 @@
 let num1;
 let num2;
 let operator;
+let nbOperator = 0;
 
 function addition(num1, num2){
     return num1+num2;
@@ -22,7 +23,8 @@ function division(num1, num2){
 
 function operate(num1, num2, operator){
     if(operator === '+'){
-        return addition(num1, num2);
+        num1 = addition(num1, num2);
+        return num1;
     }
     if(operator === '-'){
         return substraction(num1, num2);
@@ -33,6 +35,12 @@ function operate(num1, num2, operator){
     if(operator === '/'){
         return division(num1, num2);
     }
+
+}
+
+function calculate(screen){
+    screen.textContent+="=";
+    toMath(screen);
 }
 
 function toMath(screen){
@@ -49,9 +57,13 @@ function toMath(screen){
         operator='/'
     } 
 
-    num1 = parseFloat(screen.textContent.slice(operator)[0]);
-    num2 = parseFloat(screen.textContent.slice(operator)[2]);
-    screen.textContent+=operate(num1, num2, operator);
+    const indexOperator = screen.textContent.indexOf(operator);
+    num1 = parseFloat(screen.textContent.slice(0, indexOperator));
+    num2 = parseFloat(screen.textContent.slice(indexOperator +1));
+    const result = operate(num1, num2, operator);
+    screenLast.textContent=(screen.textContent+=result);
+    screen.textContent=result;
+    nbOperator=0;
 }
 
 //DOM
@@ -60,6 +72,7 @@ const calculator = document.getElementById('calculator');
 
 //Created elements
 const screen = document.createElement('div');
+const screenLast = document.createElement('div');
 const button1 = document.createElement('button');
 const button2 = document.createElement('button');
 const button3 = document.createElement('button');
@@ -71,10 +84,13 @@ const button8 = document.createElement('button');
 const button9 = document.createElement('button');
 const button0 = document.createElement('button');
 const buttonPlus = document.createElement('button');
+const buttonMinus = document.createElement('button');
+const buttonMultiply = document.createElement('button');
+const buttonDivide = document.createElement('button');
 const buttonEqual = document.createElement('button');
 
 //Appending elements
-
+calculator.appendChild(screenLast);
 calculator.appendChild(screen);
 calculator.appendChild(button1).textContent="1";
 calculator.appendChild(button2).textContent="2";
@@ -88,6 +104,9 @@ calculator.appendChild(button9).textContent="9";
 calculator.appendChild(button0).textContent="0";
 
 calculator.appendChild(buttonPlus).textContent="+";
+calculator.appendChild(buttonMinus).textContent="-"
+calculator.appendChild(buttonMultiply).textContent="*"
+calculator.appendChild(buttonDivide).textContent="/"
 calculator.appendChild(buttonEqual).textContent="=";
 
 
@@ -103,12 +122,73 @@ button2.addEventListener("click", (event)=>{
 button3.addEventListener("click", (event)=>{
     screen.textContent+=3;
 })
-buttonPlus.addEventListener("click", (event)=>{
-    screen.textContent+="+";
+button4.addEventListener("click", (event)=>{
+    screen.textContent+=4;
 })
+button5.addEventListener("click", (event)=>{
+    screen.textContent+=5;
+})
+button6.addEventListener("click", (event)=>{
+    screen.textContent+=6;
+})
+button7.addEventListener("click", (event)=>{
+    screen.textContent+=7;
+})
+button8.addEventListener("click", (event)=>{
+    screen.textContent+=8;
+})
+button9.addEventListener("click", (event)=>{
+    screen.textContent+=9;
+})
+button0.addEventListener("click", (event)=>{
+    screen.textContent+=0;
+})
+buttonPlus.addEventListener("click", (event)=>{
+    if(nbOperator<1){
+    screen.textContent+="+";
+    nbOperator++;
+    } else{
+        calculate(screen);
+        screen.textContent+="+";
+        nbOperator++;
+}
+})
+
+buttonMinus.addEventListener("click", (event)=>{
+    if(nbOperator<1){
+        screen.textContent+="-";
+        nbOperator++;
+        } else{
+            calculate(screen);
+            screen.textContent+="-";
+            nbOperator++;
+    }
+})
+
+buttonMultiply.addEventListener("click", (event)=>{
+    if(nbOperator<1){
+        screen.textContent+="*";
+        nbOperator++;
+        } else{
+            calculate(screen);
+            screen.textContent+="*";
+            nbOperator++;
+    }
+})
+
+buttonDivide.addEventListener("click", (event)=>{
+    if(nbOperator<1){
+        screen.textContent+="/";
+        nbOperator++;
+        } else{
+            calculate(screen);
+            screen.textContent+="/";
+            nbOperator++;
+    }
+})
+
 buttonEqual.addEventListener("click", (event)=>{
-    screen.textContent+="=";
-    toMath(screen);
+    calculate(screen);
 })
 
 
