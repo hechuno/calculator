@@ -43,6 +43,12 @@ function calculate(screen){
     toMath(screen);
 }
 
+function isOperator(operator){
+    if(operator==="+"||operator==="-"||operator==="*"||operator==="/"){
+        return true;
+    }
+}
+
 function toMath(screen){
     if(screen.textContent.includes('+')){
         operator='+'
@@ -83,13 +89,18 @@ const button7 = document.createElement('button');
 const button8 = document.createElement('button');
 const button9 = document.createElement('button');
 const button0 = document.createElement('button');
+const buttonDot = document.createElement('button');
 const buttonPlus = document.createElement('button');
 const buttonMinus = document.createElement('button');
 const buttonMultiply = document.createElement('button');
 const buttonDivide = document.createElement('button');
 const buttonEqual = document.createElement('button');
+const buttonClear = document.createElement('button');
+const buttonDelete = document.createElement('button');
 
 //Appending elements
+calculator.appendChild(buttonClear).textContent="Clear";
+calculator.appendChild(buttonDelete).textContent="Delete";
 calculator.appendChild(screenLast);
 calculator.appendChild(screen);
 calculator.appendChild(button1).textContent="1";
@@ -102,6 +113,7 @@ calculator.appendChild(button7).textContent="7";
 calculator.appendChild(button8).textContent="8";
 calculator.appendChild(button9).textContent="9";
 calculator.appendChild(button0).textContent="0";
+calculator.appendChild(buttonDot).textContent=".";
 
 calculator.appendChild(buttonPlus).textContent="+";
 calculator.appendChild(buttonMinus).textContent="-"
@@ -143,11 +155,14 @@ button9.addEventListener("click", (event)=>{
 button0.addEventListener("click", (event)=>{
     screen.textContent+=0;
 })
+buttonDot.addEventListener("click", (event)=>{
+    screen.textContent+=".";
+})
 buttonPlus.addEventListener("click", (event)=>{
     if(nbOperator<1){
     screen.textContent+="+";
     nbOperator++;
-    } else{
+    } else {
         calculate(screen);
         screen.textContent+="+";
         nbOperator++;
@@ -188,11 +203,24 @@ buttonDivide.addEventListener("click", (event)=>{
 })
 
 buttonEqual.addEventListener("click", (event)=>{
+    if(nbOperator===0){
+        return;
+    }
     calculate(screen);
 })
 
+buttonClear.addEventListener("click", (event)=>{
+    nbOperator=0;
+    num1=null;
+    num2=null;
+    operator=null;
+    screenLast.textContent="";
+    screen.textContent="";
+})
 
-
-
-
-
+buttonDelete.addEventListener("click", (event)=>{
+    if(screen.textContent.charAt(screen.textContent.length-1)){
+        nbOperator--;
+    }
+    screen.textContent=screen.textContent.slice(0, -1);
+})
