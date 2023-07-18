@@ -73,7 +73,7 @@ function toMath(screen){
     const indexOperator = screen.textContent.indexOf(operator);
     num1 = parseFloat(screen.textContent.slice(0, indexOperator));
     num2 = parseFloat(screen.textContent.slice(indexOperator +1));
-    const result = operate(num1, num2, operator);
+    const result = operate(num1, num2, operator).toFixed(4);
     screenLast.textContent=(screen.textContent+=result);
     screen.textContent=result;
     nbOperator=0;
