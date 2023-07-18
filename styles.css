@@ -1,3 +1,10 @@
 * {
-font-size: 150%;
+font-size: 120%;
+}
+
+.screens {
+    height:40px;
+    border:2px;
+    border-style: solid;
+    border-color:black;
 }

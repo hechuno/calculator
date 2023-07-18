@@ -18,7 +18,14 @@ function multiplication(num1, num2){
 }
 
 function division(num1, num2){
-    return num1/num2;
+    if(num2===0){
+        screenLast.textContent="you stupid. can't divide by 0";
+        screen.textContent="clear to restart";
+        throw new Error("Attempt to divide by 0. Clear to restart");
+    } 
+        return num1/num2;
+
+    
 }
 
 function operate(num1, num2, operator){
@@ -101,8 +108,8 @@ const buttonDelete = document.createElement('button');
 //Appending elements
 calculator.appendChild(buttonClear).textContent="Clear";
 calculator.appendChild(buttonDelete).textContent="Delete";
-calculator.appendChild(screenLast);
-calculator.appendChild(screen);
+calculator.appendChild(screenLast).classList.add("screens");
+calculator.appendChild(screen).classList.add("screens");
 calculator.appendChild(button1).textContent="1";
 calculator.appendChild(button2).textContent="2";
 calculator.appendChild(button3).textContent="3";
@@ -123,8 +130,6 @@ calculator.appendChild(buttonEqual).textContent="=";
 
 
 //Manipulating elements
-
-screen.textContent = "";
 button1.addEventListener("click", (event)=>{
     screen.textContent+=1;
 })
