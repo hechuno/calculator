@@ -161,6 +161,9 @@ button0.addEventListener("click", (event)=>{
     screen.textContent+=0;
 })
 buttonDot.addEventListener("click", (event)=>{
+    if(screen.textContent.includes(".")){
+        return;
+    }
     screen.textContent+=".";
 })
 buttonPlus.addEventListener("click", (event)=>{
