@@ -159,6 +159,9 @@ buttonDot.addEventListener("click", (event)=>{
     screen.textContent+=".";
 })
 buttonPlus.addEventListener("click", (event)=>{
+    if(isOperator(screen.textContent.charAt(screen.textContent.length-1))){
+        return;
+    }
     if(nbOperator<1){
     screen.textContent+="+";
     nbOperator++;
@@ -170,6 +173,9 @@ buttonPlus.addEventListener("click", (event)=>{
 })
 
 buttonMinus.addEventListener("click", (event)=>{
+    if(isOperator(screen.textContent.charAt(screen.textContent.length-1))){
+        return;
+    }
     if(nbOperator<1){
         screen.textContent+="-";
         nbOperator++;
@@ -181,6 +187,9 @@ buttonMinus.addEventListener("click", (event)=>{
 })
 
 buttonMultiply.addEventListener("click", (event)=>{
+    if(isOperator(screen.textContent.charAt(screen.textContent.length-1))){
+        return;
+    }
     if(nbOperator<1){
         screen.textContent+="*";
         nbOperator++;
@@ -192,6 +201,9 @@ buttonMultiply.addEventListener("click", (event)=>{
 })
 
 buttonDivide.addEventListener("click", (event)=>{
+    if(isOperator(screen.textContent.charAt(screen.textContent.length-1))){
+        return;
+    }
     if(nbOperator<1){
         screen.textContent+="/";
         nbOperator++;
@@ -219,7 +231,7 @@ buttonClear.addEventListener("click", (event)=>{
 })
 
 buttonDelete.addEventListener("click", (event)=>{
-    if(screen.textContent.charAt(screen.textContent.length-1)){
+    if(isOperator(screen.textContent.charAt(screen.textContent.length-1))){
         nbOperator--;
     }
     screen.textContent=screen.textContent.slice(0, -1);
