@@ -1,4 +1,4 @@
-//Operations
+//Calculation Functions
 
 function addition(num1, num2){
     return num1+num2;
@@ -177,38 +177,48 @@ buttonClear.classList.add("clrDelButtons");
 buttonDelete.classList.add("clrDelButtons");
 calculator.classList.add("operator");
 
-//Manipulating elements
-button1.addEventListener("click", (event)=>{
+//Add Text Functions
+function one(){
     screen.textContent+=1;
-})
-button2.addEventListener("click", (event)=>{
+} 
+
+function two(){
     screen.textContent+=2;
-})
-button3.addEventListener("click", (event)=>{
+} 
+
+function three(){
     screen.textContent+=3;
-})
-button4.addEventListener("click", (event)=>{
+} 
+
+function four(){
     screen.textContent+=4;
-})
-button5.addEventListener("click", (event)=>{
+} 
+
+function five(){
     screen.textContent+=5;
-})
-button6.addEventListener("click", (event)=>{
+} 
+
+function six(){
     screen.textContent+=6;
-})
-button7.addEventListener("click", (event)=>{
+} 
+
+function seven(){
     screen.textContent+=7;
-})
-button8.addEventListener("click", (event)=>{
+} 
+
+function eight(){
     screen.textContent+=8;
-})
-button9.addEventListener("click", (event)=>{
+} 
+
+function nine(){
     screen.textContent+=9;
-})
-button0.addEventListener("click", (event)=>{
+}
+
+function zero(){
     screen.textContent+=0;
-})
-buttonDot.addEventListener("click", (event)=>{
+} 
+
+function dot(){
     const indexOperator = findIndexOperator(screen);
     console.log(indexOperator);
     if(screen.textContent.slice(0, indexOperator).includes(".") && screen.textContent.slice(indexOperator+1).includes(".")){
@@ -221,8 +231,9 @@ buttonDot.addEventListener("click", (event)=>{
         return;
     }
     screen.textContent+=".";
-})
-buttonPlus.addEventListener("click", (event)=>{
+}
+
+function plus(){
     if(isOperator(screen.textContent.charAt(screen.textContent.length-1))){
         return;
     }
@@ -234,9 +245,9 @@ buttonPlus.addEventListener("click", (event)=>{
         screen.textContent+="+";
         calculator.classList.toggle("operator");
 }
-})
+}
 
-buttonMinus.addEventListener("click", (event)=>{
+function minus(){
     if(isOperator(screen.textContent.charAt(screen.textContent.length-1))){
         return;
     }
@@ -248,9 +259,9 @@ buttonMinus.addEventListener("click", (event)=>{
             screen.textContent+="-";
             calculator.classList.toggle("operator");
     }
-})
+}
 
-buttonMultiply.addEventListener("click", (event)=>{
+function multiply(){
     if(isOperator(screen.textContent.charAt(screen.textContent.length-1))){
         return;
     }
@@ -262,9 +273,9 @@ buttonMultiply.addEventListener("click", (event)=>{
             screen.textContent+="*";
             calculator.classList.toggle("operator");
     }
-})
+}
 
-buttonDivide.addEventListener("click", (event)=>{
+function divide(){
     if(isOperator(screen.textContent.charAt(screen.textContent.length-1))){
         return;
     }
@@ -276,15 +287,103 @@ buttonDivide.addEventListener("click", (event)=>{
             screen.textContent+="/";
             calculator.classList.toggle("operator");
     }
-})
+}
 
-buttonEqual.addEventListener("click", (event)=>{
+function equal(){
     if(calculator.classList.contains("operator")){
         return;
     }
     calculate(screen);
+}
+
+function backspace(){
+    if(isOperator(screen.textContent.charAt(screen.textContent.length-1))){
+        calculator.classList.remove("operator");
+    }
+    screen.textContent=screen.textContent.slice(0, -1);
+}
+
+document.addEventListener("keydown", function(event){
+    switch (event.key) {
+        case '1':
+            one();
+            break;
+        case '2':
+            two();
+            break;
+        case '3':
+            three();
+            break;
+        case '4':
+            four();
+            break;
+        case '5':
+            five();
+            break;
+        case '6':
+            six();
+            break;
+        case '7':
+            seven();
+            break;
+        case '8':
+            eight();
+            break;
+        case '9':
+            nine();
+            break;
+        case '0':
+            zero();
+            break;
+        case '.':
+            dot();
+            break;
+        case '+':
+            plus();
+            break;
+        case '-':
+            minus();
+            break;
+        case '*':
+            multiply();
+            break;
+        case '/':
+            divide();
+            break;
+        case '=':
+            equal();
+            break;
+        case 'Enter':
+            equal();
+            break;
+        case 'Backspace':
+            backspace();
+            break;
+        case 'Delete':
+            backspace();
+            break;
+        default:
+            return;
+    }
 })
 
+
+button1.addEventListener("click", one);
+button2.addEventListener("click", two);
+button3.addEventListener("click", three);
+button4.addEventListener("click", four);
+button5.addEventListener("click", five);
+button6.addEventListener("click", six);
+button7.addEventListener("click", seven);
+button8.addEventListener("click", eight);
+button9.addEventListener("click", nine);
+button0.addEventListener("click", zero);
+buttonDot.addEventListener("click", dot);
+buttonPlus.addEventListener("click", plus);
+buttonMinus.addEventListener("click", minus);
+buttonMultiply.addEventListener("click", multiply);
+buttonDivide.addEventListener("click", divide);
+buttonEqual.addEventListener("click", equal);
 buttonClear.addEventListener("click", (event)=>{
     calculator.classList.add("operator");
     num1=null;
@@ -293,10 +392,4 @@ buttonClear.addEventListener("click", (event)=>{
     screenLast.textContent="";
     screen.textContent="";
 })
-
-buttonDelete.addEventListener("click", (event)=>{
-    if(isOperator(screen.textContent.charAt(screen.textContent.length-1))){
-        calculator.classList.remove("operator");
-    }
-    screen.textContent=screen.textContent.slice(0, -1);
-})
+buttonDelete.addEventListener("click", backspace);
