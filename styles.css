@@ -2,9 +2,39 @@
 font-size: 120%;
 }
 
-.screens {
+#calculator{
+    display:flex;
+    flex-direction: column;
+}
+
+#screens {
+
+}
+#screens * {
+    margin:2px;
     height:40px;
     border:2px;
     border-style: solid;
     border-color:black;
+}
+
+#optionButtons {
+    display: flex;
+    flex-grow: 1;
+}
+
+
+.clrDelButtons{
+    flex-grow: 1;
+    margin: 2px;
+}
+
+#buttons {
+    display:grid;
+    grid-template-rows: auto auto auto auto;
+    grid-template-columns: auto auto auto auto;
+}
+
+#buttons * {
+    margin:2px;
 }

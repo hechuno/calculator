@@ -1,8 +1,5 @@
 //Operations
 
-let num1;
-let num2;
-let operator;
 let nbOperator = 0;
 
 function addition(num1, num2){
@@ -56,7 +53,8 @@ function isOperator(operator){
     }
 }
 
-function toMath(screen){
+function findOperator(screen){
+    let operator;
     if(screen.textContent.includes('+')){
         operator='+'
     } 
@@ -70,10 +68,53 @@ function toMath(screen){
         operator='/'
     } 
 
+    return operator;
+}
+
+function findIndexOperator(screen){
+    const operator = findOperator(screen);
     const indexOperator = screen.textContent.indexOf(operator);
+
+    return indexOperator;
+}
+
+function countDecimals(screen){
+    let num1Dec = 0;
+    let num2Dec = 0;
+    num1 = getNums(screen)[0];
+    num2 = getNums(screen)[1];
+    if(num1.toString().includes('.')){
+    num1Dec = getNums(screen)[0].toString().split(".")[1].length;
+    }
+    if(num2.toString().includes('.')){
+        num2Dec = getNums(screen)[1].toString().split(".")[1].length;
+    }
+
+    return [num1Dec, num2Dec];
+}
+
+function getNums(screen){
+    const indexOperator = findIndexOperator(screen);
     num1 = parseFloat(screen.textContent.slice(0, indexOperator));
     num2 = parseFloat(screen.textContent.slice(indexOperator +1));
-    const result = operate(num1, num2, operator).toFixed(4);
+
+    return [num1, num2];
+}
+
+function toMath(screen){
+    const operator = findOperator(screen);
+    num1 = getNums(screen)[0];
+    num2 = getNums(screen)[1];
+
+    num1Dec = countDecimals(screen)[0];
+    num2Dec = countDecimals(screen)[1];
+    
+    let result = operate(num1, num2, operator)
+
+    if(num1Dec>3 || num2Dec>3){
+        result=result.toFixed(4);
+    }
+
     screenLast.textContent=(screen.textContent+=result);
     screen.textContent=result;
     nbOperator=0;
@@ -82,6 +123,9 @@ function toMath(screen){
 //DOM
 
 const calculator = document.getElementById('calculator');
+const buttons = document.getElementById('buttons');
+const screens = document.getElementById('screens');
+const optionButtons = document.getElementById('optionButtons');
 
 //Created elements
 const screen = document.createElement('div');
@@ -106,28 +150,33 @@ const buttonClear = document.createElement('button');
 const buttonDelete = document.createElement('button');
 
 //Appending elements
-calculator.appendChild(buttonClear).textContent="Clear";
-calculator.appendChild(buttonDelete).textContent="Delete";
-calculator.appendChild(screenLast).classList.add("screens");
-calculator.appendChild(screen).classList.add("screens");
-calculator.appendChild(button1).textContent="1";
-calculator.appendChild(button2).textContent="2";
-calculator.appendChild(button3).textContent="3";
-calculator.appendChild(button4).textContent="4";
-calculator.appendChild(button5).textContent="5";
-calculator.appendChild(button6).textContent="6";
-calculator.appendChild(button7).textContent="7";
-calculator.appendChild(button8).textContent="8";
-calculator.appendChild(button9).textContent="9";
-calculator.appendChild(button0).textContent="0";
-calculator.appendChild(buttonDot).textContent=".";
+calculator.appendChild(optionButtons);
+optionButtons.appendChild(buttonClear).textContent="Clear";
+optionButtons.appendChild(buttonDelete).textContent="Delete";
+calculator.appendChild(screens);
+screens.appendChild(screenLast);
+screens.appendChild(screen);
+calculator.appendChild(buttons);
+buttons.appendChild(button1).textContent="1";
+buttons.appendChild(button2).textContent="2";
+buttons.appendChild(button3).textContent="3";
+buttons.appendChild(button4).textContent="4";
+buttons.appendChild(button5).textContent="5";
+buttons.appendChild(button6).textContent="6";
+buttons.appendChild(button7).textContent="7";
+buttons.appendChild(button8).textContent="8";
+buttons.appendChild(button9).textContent="9";
+buttons.appendChild(button0).textContent="0";
+buttons.appendChild(buttonDot).textContent=".";
 
-calculator.appendChild(buttonPlus).textContent="+";
-calculator.appendChild(buttonMinus).textContent="-"
-calculator.appendChild(buttonMultiply).textContent="*"
-calculator.appendChild(buttonDivide).textContent="/"
-calculator.appendChild(buttonEqual).textContent="=";
+buttons.appendChild(buttonEqual).textContent="=";
+buttons.appendChild(buttonPlus).textContent="+";
+buttons.appendChild(buttonMinus).textContent="-"
+buttons.appendChild(buttonMultiply).textContent="*"
+buttons.appendChild(buttonDivide).textContent="/"
 
+buttonClear.classList.add("clrDelButtons");
+buttonDelete.classList.add("clrDelButtons");
 
 //Manipulating elements
 button1.addEventListener("click", (event)=>{
@@ -161,7 +210,15 @@ button0.addEventListener("click", (event)=>{
     screen.textContent+=0;
 })
 buttonDot.addEventListener("click", (event)=>{
-    if(screen.textContent.includes(".")){
+    const indexOperator = findIndexOperator(screen);
+    console.log(indexOperator);
+    if(screen.textContent.slice(0, indexOperator).includes(".") && screen.textContent.slice(indexOperator+1).includes(".")){
+        return;
+    }
+    if(screen.textContent.slice(indexOperator+1).includes(".") && indexOperator!=-1){
+        return;
+    }
+    if(screen.textContent.includes(".") && indexOperator===-1){
         return;
     }
     screen.textContent+=".";
