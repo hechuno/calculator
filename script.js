@@ -1,7 +1,5 @@
 //Operations
 
-let nbOperator = 0;
-
 function addition(num1, num2){
     return num1+num2;
 }
@@ -117,7 +115,7 @@ function toMath(screen){
 
     screenLast.textContent=(screen.textContent+=result);
     screen.textContent=result;
-    nbOperator=0;
+    calculator.classList.toggle("operator");
 }
 
 //DOM
@@ -177,6 +175,7 @@ buttons.appendChild(buttonDivide).textContent="/"
 
 buttonClear.classList.add("clrDelButtons");
 buttonDelete.classList.add("clrDelButtons");
+calculator.classList.add("operator");
 
 //Manipulating elements
 button1.addEventListener("click", (event)=>{
@@ -227,13 +226,13 @@ buttonPlus.addEventListener("click", (event)=>{
     if(isOperator(screen.textContent.charAt(screen.textContent.length-1))){
         return;
     }
-    if(nbOperator<1){
+    if(calculator.classList.contains("operator")){
     screen.textContent+="+";
-    nbOperator++;
+    calculator.classList.toggle("operator");
     } else {
         calculate(screen);
         screen.textContent+="+";
-        nbOperator++;
+        calculator.classList.toggle("operator");
 }
 })
 
@@ -241,13 +240,13 @@ buttonMinus.addEventListener("click", (event)=>{
     if(isOperator(screen.textContent.charAt(screen.textContent.length-1))){
         return;
     }
-    if(nbOperator<1){
+    if(calculator.classList.contains("operator")){
         screen.textContent+="-";
-        nbOperator++;
+        calculator.classList.toggle("operator");
         } else{
             calculate(screen);
             screen.textContent+="-";
-            nbOperator++;
+            calculator.classList.toggle("operator");
     }
 })
 
@@ -255,13 +254,13 @@ buttonMultiply.addEventListener("click", (event)=>{
     if(isOperator(screen.textContent.charAt(screen.textContent.length-1))){
         return;
     }
-    if(nbOperator<1){
+    if(calculator.classList.contains("operator")){
         screen.textContent+="*";
-        nbOperator++;
+        calculator.classList.toggle("operator");
         } else{
             calculate(screen);
             screen.textContent+="*";
-            nbOperator++;
+            calculator.classList.toggle("operator");
     }
 })
 
@@ -269,25 +268,25 @@ buttonDivide.addEventListener("click", (event)=>{
     if(isOperator(screen.textContent.charAt(screen.textContent.length-1))){
         return;
     }
-    if(nbOperator<1){
+    if(calculator.classList.contains("operator")){
         screen.textContent+="/";
-        nbOperator++;
+        calculator.classList.toggle("operator");
         } else{
             calculate(screen);
             screen.textContent+="/";
-            nbOperator++;
+            calculator.classList.toggle("operator");
     }
 })
 
 buttonEqual.addEventListener("click", (event)=>{
-    if(nbOperator===0){
+    if(calculator.classList.contains("operator")){
         return;
     }
     calculate(screen);
 })
 
 buttonClear.addEventListener("click", (event)=>{
-    nbOperator=0;
+    calculator.classList.add("operator");
     num1=null;
     num2=null;
     operator=null;
@@ -297,7 +296,7 @@ buttonClear.addEventListener("click", (event)=>{
 
 buttonDelete.addEventListener("click", (event)=>{
     if(isOperator(screen.textContent.charAt(screen.textContent.length-1))){
-        nbOperator--;
+        calculator.classList.remove("operator");
     }
     screen.textContent=screen.textContent.slice(0, -1);
 })
