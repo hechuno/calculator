@@ -354,6 +354,7 @@ document.addEventListener("keydown", function(event){
             equal();
             break;
         case 'Enter':
+            event.preventDefault();
             equal();
             break;
         case 'Backspace':
