@@ -17,6 +17,7 @@ This project consists of the development of a simple calculator using HTML/CSS a
 - CSS for styling and usability.
 
 **Check it out here**
+https://hechuno.github.io/calculator/
 
 **To improve**
 - There was a bug that I could not recreate and identify where upon equals, it simply added the second number to the first like a string. Testing is still needed.
