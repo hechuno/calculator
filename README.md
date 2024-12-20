@@ -1,4 +1,4 @@
-# odin-calculator
+# Calculator
 
 **Calculator**
 
